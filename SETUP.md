@@ -15,7 +15,7 @@
 	ssh-keygen -N "" -f ~/.ssh/id_rsa
 	```
 
-1. Скопируйте содержимое файла id_rsa.pub (`cat ~/.ssh/id_rsa.pub`) в https://gitlab.manytask.org/profile/keys
+1. Скопируйте содержимое файла id_rsa.pub (`cat ~/.ssh/id_rsa.pub`) в https://gitlab.manytask.org/-/profile/keys
 1. Проверьте, что ssh ключ работает. Выполните команду `ssh git@gitlab.manytask.org`. Вы должны увидеть такое приветствие:
 
 	```
