@@ -4,6 +4,8 @@ members = [
     "add",
     "comm",
     "perc",
+    "ini",
+    "tar",
 
     # Tools
     "tools/submit",
