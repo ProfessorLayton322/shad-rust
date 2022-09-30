@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 pub struct TarFile<'a> {
     pub header: TarHeader<'a>,
     pub data: &'a [u8],
@@ -15,4 +17,3 @@ pub fn parse_tar(mut tar: &[u8]) -> Vec<TarFile> {
     // TODO: your code here.
     unimplemented!()
 }
-
