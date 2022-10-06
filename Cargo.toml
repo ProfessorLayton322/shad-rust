@@ -6,6 +6,8 @@ members = [
     "perc",
     "ini",
     "tar",
+    "polka",
+    "trust",
 
     # Tools
     "tools/submit",

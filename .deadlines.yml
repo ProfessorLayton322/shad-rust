@@ -1,6 +1,20 @@
+- group:    Enums & traits
+  start:    06-10-2022 19:30
+  deadline: 20-10-2022 19:30
+  second_deadline: 31-01-2023 23:59
+  enabled: true
+  tasks:
+    - task: polka
+      score: 100
+      url: https://gitlab.manytask.org/rust-ysda/public-2022-fall/-/tree/master/polka
+    - task: trust
+      score: 100
+      url: https://gitlab.manytask.org/rust-ysda/public-2022-fall/-/tree/master/trust
+
 - group:    Borrowing & slices
   start:    29-09-2022 19:30
-  deadline: 13-10-2022 19:30
+  deadline: 20-10-2022 19:30
+  second_deadline: 31-01-2023 23:59
   enabled: true
   tasks:
     - task: ini
@@ -13,6 +27,7 @@
 - group:    Starters
   start:    15-09-2022 19:30
   deadline: 29-09-2022 19:30
+  second_deadline: 31-01-2023 23:59
   enabled: true
   tasks:
     - task: comm
