@@ -8,6 +8,7 @@ members = [
     "tar",
     "polka",
     "trust",
+    "flatmap",
 
     # Tools
     "tools/submit",
