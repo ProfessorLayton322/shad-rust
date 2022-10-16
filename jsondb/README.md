@@ -85,6 +85,6 @@ Select-выражением также можно задавать запрос�
 
 ### 2.2. Обработка ошибок
 
-Для обработки ошибок используется библиотека anyhow. Не стесняйтесь пользоваться оператором `?`, методами [.context](https://docs.rs/anyhow/latest/anyhow/trait.Context.html#tymethod.context), [.with_context](https://docs.rs/anyhow/latest/anyhow/trait.Context.html#tymethod.with_context), макросами [bail!](https://docs.rs/anyhow/latest/anyhow/macro.bail.html) и [ensure!](https://docs.rs/anyhow/latest/anyhow/macro.bail.html).
+Для обработки ошибок используется библиотека anyhow. Не стесняйтесь пользоваться оператором `?`, методами [.context](https://docs.rs/anyhow/latest/anyhow/trait.Context.html#tymethod.context), [.with_context](https://docs.rs/anyhow/latest/anyhow/trait.Context.html#tymethod.with_context), макросами [bail!](https://docs.rs/anyhow/latest/anyhow/macro.bail.html) и [ensure!](https://docs.rs/anyhow/latest/anyhow/macro.ensure.html).
 
 Старайтесь делать сообщения об ошибке как можно более понятными человеку. Тестов на конкретные тексты ошибок в задаче нет.
