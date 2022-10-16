@@ -9,6 +9,7 @@ members = [
     "polka",
     "trust",
     "flatmap",
+    "jsondb",
 
     # Tools
     "tools/submit",
