@@ -10,6 +10,7 @@ members = [
     "trust",
     "flatmap",
     "jsondb",
+    "mpsc",
 
     # Tools
     "tools/submit",
