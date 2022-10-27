@@ -1,3 +1,16 @@
+- group:    Functional
+  start:    27-10-2022 19:30
+  deadline: 10-11-2022 19:30
+  second_deadline: 31-01-2023 23:59
+  enabled: true
+  tasks:
+    - task: itertools
+      score: 200
+      url: https://gitlab.manytask.org/rust-ysda/public-2022-fall/-/tree/master/itertools
+    - task: fswalk
+      score: 200
+      url: https://gitlab.manytask.org/rust-ysda/public-2022-fall/-/tree/master/fswalk
+
 - group:    Smart pointers
   start:    20-10-2022 19:30
   deadline: 03-11-2022 19:30
@@ -5,7 +18,7 @@
   enabled: true
   tasks:
     - task: mpsc
-      score: 1
+      score: 100
       url: https://gitlab.manytask.org/rust-ysda/public-2022-fall/-/tree/master/mpsc
 
 - group:    Project 1

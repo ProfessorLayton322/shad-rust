@@ -11,6 +11,8 @@ members = [
     "flatmap",
     "jsondb",
     "mpsc",
+    "itertools",
+    "fswalk",
 
     # Tools
     "tools/submit",
