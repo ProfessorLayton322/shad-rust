@@ -1,3 +1,16 @@
+- group:    Macros
+  start:    03-11-2022 19:30
+  deadline: 17-11-2022 19:30
+  second_deadline: 31-01-2023 23:59
+  enabled: true
+  tasks:
+    - task: stdmacro
+      score: 100
+      url: https://gitlab.manytask.org/rust-ysda/public-2022-fall/-/tree/master/stdmacro
+    - task: gc
+      score: 300
+      url: https://gitlab.manytask.org/rust-ysda/public-2022-fall/-/tree/master/gc
+
 - group:    Functional
   start:    27-10-2022 19:30
   deadline: 10-11-2022 19:30
