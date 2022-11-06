@@ -64,13 +64,11 @@ pub fn json_to_inner(json_value: JsonValue) -> Result<Value> {
         JsonValue::String(string) => Ok(Value::String(string)),
         JsonValue::Short(short_string) => Ok(Value::String(short_string.to_string())),
         JsonValue::Number(_) => {
-            match json_value.as_f32() {
-                Some(value) => return Ok(Value::Float(value)),
-                None => {}
-            };
-            match json_value.as_i32() {
-                Some(value) => return Ok(Value::Int(value)),
-                None => {}
+            if let Some(value) = json_value.as_f32() {
+                return Ok(Value::Float(value));
+            }
+            if let Some(value) = json_value.as_i32() {
+                return Ok(Value::Int(value));
             }
             bail!("Invalid integral type");
         }
