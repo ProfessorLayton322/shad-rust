@@ -15,6 +15,7 @@ members = [
     "fswalk",
     "stdmacro",
     "gc",
+    "orm",
 
     # Tools
     "tools/submit",
