@@ -16,6 +16,8 @@ members = [
     "stdmacro",
     "gc",
     "orm",
+    "threadpool",
+    "tcp_proxy",
 
     # Tools
     "tools/submit",
