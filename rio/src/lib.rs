@@ -1,3 +1,5 @@
+#![forbid(unsafe_code)]
+
 mod network;
 mod runtime;
 mod scheduler;

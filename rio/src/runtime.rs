@@ -30,14 +30,8 @@ where
 
 ////////////////////////////////////////////////////////////////////////////////
 
+#[derive(Default)]
 pub struct Runtime(Arc<RuntimeState>);
-
-// NB: RuntimeHandle does not implement Default on purpose.
-impl Default for Runtime {
-    fn default() -> Self {
-        Self(Arc::default())
-    }
-}
 
 impl Runtime {
     pub fn handle(&self) -> RuntimeHandle {
