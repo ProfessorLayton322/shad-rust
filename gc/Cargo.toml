@@ -5,3 +5,4 @@ edition = "2021"
 
 [dependencies]
 gc-derive = { path = "./gc-derive" }
+proc-macro2 = "1.0.47"
