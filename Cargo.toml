@@ -18,6 +18,7 @@ members = [
     "orm",
     "threadpool",
     "tcp_proxy",
+    "rio",
 
     # Tools
     "tools/submit",
