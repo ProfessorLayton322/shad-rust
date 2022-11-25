@@ -1,7 +1,7 @@
 use proc_macro::{TokenStream, TokenTree::Group, TokenTree::Ident};
 #[proc_macro_derive(Scan)]
 pub fn derive_scan(input: TokenStream) -> TokenStream {
-    let mut iter = input.clone().into_iter();
+    let mut iter = input.into_iter();
     iter.next();
     let Some(Ident(ident)) = iter.next() else {
         return TokenStream::new();
@@ -12,7 +12,7 @@ pub fn derive_scan(input: TokenStream) -> TokenStream {
             vec![]
         }}
     }}",
-        ident.to_string()
+        ident
     )
     .parse()
     .unwrap();
@@ -26,8 +26,8 @@ pub fn derive_scan(input: TokenStream) -> TokenStream {
                 self.{}.get_allocations()
             }}
         }}",
-            ident.to_string(),
-            field_ident.to_string()
+            ident,
+            field_ident
         )
         .parse()
         .unwrap()
