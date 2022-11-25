@@ -1,32 +1,37 @@
-use proc_macro::{TokenStream};
-use quote::{quote};
-
+use proc_macro::{TokenStream, TokenTree::Group, TokenTree::Ident};
 #[proc_macro_derive(Scan)]
 pub fn derive_scan(input: TokenStream) -> TokenStream {
-    let tokens = proc_macro2::TokenStream::from(input);
-    let mut iter = tokens.into_iter();
+    let mut iter = input.clone().into_iter();
     iter.next();
-    let Some(proc_macro2::TokenTree::Ident(ident)) = iter.next() else {
+    let Some(Ident(ident)) = iter.next() else {
         return TokenStream::new();
     };
-    if let Some(proc_macro2::TokenTree::Group(group)) = iter.next() {
-        let field = group.stream().into_iter().next().unwrap();
-        let construct = quote! {
-            impl Scan for #ident {
-                fn get_allocations(&self) -> Vec<usize> {
-                    self.#field.get_allocations()
-                }
-            }
+    let default_answer: TokenStream = format!(
+        "impl Scan for {} {{
+        fn get_allocations(&self) -> Vec<usize> {{
+            vec![]
+        }}
+    }}",
+        ident.to_string()
+    )
+    .parse()
+    .unwrap();
+    if let Some(Group(group)) = iter.next() {
+        let Some(Ident(field_ident)) = group.stream().into_iter().next() else {
+            return default_answer;
         };
-        TokenStream::from(construct)
+        format!(
+            "impl Scan for {} {{
+            fn get_allocations(&self) -> Vec<usize> {{
+                self.{}.get_allocations()
+            }}
+        }}",
+            ident.to_string(),
+            field_ident.to_string()
+        )
+        .parse()
+        .unwrap()
     } else {
-        let construct = quote! {
-            impl Scan for #ident {
-                fn get_allocations(&self) -> Vec<usize> {
-                    vec![]
-                }
-            }
-        };
-        TokenStream::from(construct)
+        default_answer
     }
 }
