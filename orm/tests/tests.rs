@@ -5,13 +5,52 @@ use tempfile::NamedTempFile;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#[derive(Object, PartialEq, Clone, Debug)]
+//#[derive(Object, PartialEq, Clone, Debug)]
+#[derive(PartialEq, Clone, Debug)]
 struct User {
     pub name: String,
     pub picture: Vec<u8>,
     pub visits: i64,
     balance: f64,
     is_admin: bool,
+}
+
+use orm::object::{Schema, FieldInfo};
+
+impl Object for User {
+    fn get_schema() -> Schema {
+        Schema {
+            struct_name: "User",
+            table_name: "User",
+            fields: vec![
+                FieldInfo {
+                    column_name: "name",
+                    attr_name: "name",
+                    data_type: DataType::String,
+                },
+                FieldInfo {
+                    column_name: "picture",
+                    attr_name: "picture",
+                    data_type: DataType::Bytes,
+                },
+                FieldInfo {
+                    column_name: "visits",
+                    attr_name: "visits",
+                    data_type: DataType::Int64,
+                },
+                FieldInfo {
+                    column_name: "balance",
+                    attr_name: "balance",
+                    data_type: DataType::Float64,
+                },
+                FieldInfo {
+                    column_name: "is_admin",
+                    attr_name: "is_admin",
+                    data_type: DataType::Bool,
+                },
+            ],
+        }
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -43,8 +82,9 @@ fn fmt_res<T>(res: &Result<T>) -> String {
 #[test]
 fn test_create() {
     let mut conn = Connection::open_in_memory().unwrap();
-
     let tx = conn.new_transaction().unwrap();
+    let schema = User::get_schema();
+    println!("{:?}", schema);
     let user = User {
         name: "John".into(),
         picture: b"sdfasdgpp9q429703"[..].into(),
@@ -52,6 +92,7 @@ fn test_create() {
         balance: 100.,
         is_admin: true,
     };
+    /*
     let tx_user = tx.create(user.clone()).unwrap();
     assert_eq!(*tx_user.borrow(), user);
 
@@ -61,8 +102,9 @@ fn test_create() {
     let tx = conn.new_transaction().unwrap();
     let tx_user = tx.get::<User>(user_id).unwrap();
     assert_eq!(*tx_user.borrow(), user);
+    */
 }
-
+/*
 #[test]
 fn test_update() {
     let mut conn = Connection::open_in_memory().unwrap();
@@ -659,3 +701,4 @@ fn test_lifetimes_create() {
 
     eprintln!("is_tall: {}", order.borrow().is_tall);
 }
+*/

@@ -5,12 +5,6 @@ use std::{borrow::Cow, fmt};
 #[derive(Clone, Copy, PartialEq, Eq, Debug, Hash)]
 pub struct ObjectId(i64);
 
-impl fmt::Display for ObjectId {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "({})", self.0)
-    }
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -22,14 +16,15 @@ pub enum DataType {
     Bool,
 }
 
-pub fn datatype_to_sql(datatype: DataType) -> &'static str {
-    match datatype {
+pub fn datatype_to_sql(datatype: DataType) -> String {
+    let ans = match DataType {
         String => "TEXT",
         Bytes => "BLOB",
         Int64 => "BIGINT",
         Float64 => "REAL",
         Bool => "TINYINT",
     }
+    ans.to_str()
 }
 
 ////////////////////////////////////////////////////////////////////////////////

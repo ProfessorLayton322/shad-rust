@@ -8,6 +8,7 @@ use crate::{
 };
 
 use rusqlite::OptionalExtension;
+use rusqlite::params;
 
 use std::{borrow::Cow, fmt::Write};
 
@@ -33,13 +34,22 @@ pub(crate) trait StorageTransaction {
 
 impl<'a> StorageTransaction for rusqlite::Transaction<'a> {
     fn table_exists(&self, table: &str) -> Result<bool> {
-        // TODO: your code here.
-        unimplemented!()
+        let mut stmt = self.prepare("SELECT 1 FROM sqlite_master WHERE name == (?1)")?;
+        let weird_iter = stmt.query_map(params![table], |row| {
+            let ans: bool = row.get(0)?;
+            Ok(ans)
+        }).unwrap();
+        for line in weird_iter {
+            return Ok(true);
+        }
+        Ok(false)
     }
 
     fn create_table(&self, schema: &Schema) -> Result<()> {
-        // TODO: your code here.
-        unimplemented!()
+        let query = schema.create_table_query();
+        println!("{}", query);
+        self.execute(&query, params![])?;
+        Ok(())
     }
 
     fn insert_row(&self, schema: &Schema, row: &RowSlice) -> Result<ObjectId> {
