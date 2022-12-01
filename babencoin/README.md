@@ -313,7 +313,8 @@ async fn do(receiver: Receiver<...>) {
 
 ### 3.3. Советы по GossipService
 
-* Значение `eager_requests_interval`, равное 0, нужно интерпретировать как отключение eager requests.
+* Для периодических eager-запросов удобно использовать [tokio::time::interval](https://docs.rs/tokio/latest/tokio/time/fn.interval.html).
+Заметьте, что значение `eager_requests_interval`, равное 0, нужно интерпретировать как отключение eager requests.
 * GissipService - единственный сервис из трёх, который что-то знает про блокчейн
 глобально. Это знание вам нужно извлекать через `BlockForest`.
 
