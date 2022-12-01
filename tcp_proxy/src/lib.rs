@@ -46,11 +46,11 @@ pub fn run_proxy(port: u32, destination: String) {
         let server = TcpStream::connect(destination.as_str()).unwrap();
         let (mut client1, mut client2) = two_arcs(client);
         let (mut server1, mut server2) = two_arcs(server);
-        thread::spawn(move || {
+        let handle1 = thread::spawn(move || {
             copy(&mut client1, &mut server1).unwrap();
         });
-        thread::spawn(move || {
-            copy(&mut client2, &mut server2).unwrap();
+        let handle2 = thread::spawn(move || {
+            copy(&mut server2, &mut client2).unwrap();
         });
     }
 }
