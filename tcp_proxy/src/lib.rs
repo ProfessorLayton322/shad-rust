@@ -42,10 +42,10 @@ pub fn two_arcs(stream: TcpStream) -> (StreamWrapper, StreamWrapper) {
 pub fn run_proxy(port: u32, destination: String) {
     let listener = TcpListener::bind(format!("127.0.0.1:{}", port)).unwrap();
     for incoming in listener.incoming() {
-        let client = incoming.unwrap();
-        let server = TcpStream::connect(destination.as_str()).unwrap();
-        let (mut client1, mut client2) = two_arcs(client);
-        let (mut server1, mut server2) = two_arcs(server);
+        let mut client1 = incoming.unwrap();
+        let mut server1 = TcpStream::connect(destination.as_str()).unwrap();
+        let mut client2 = client1.try_clone().unwrap();
+        let mut server2 = server1.try_clone().unwrap();
         thread::spawn(move || {
             copy(&mut client1, &mut server1).unwrap();
         });
