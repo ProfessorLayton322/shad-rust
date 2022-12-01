@@ -67,6 +67,7 @@ test_miri:
 
 test_no_parallel:
 	cargo test -j 1
+	cargo test -j 1 --release
 
 allowlist:
 	@if [ ! -f ./.allowlist ]; then \

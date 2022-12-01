@@ -19,6 +19,7 @@ members = [
     "threadpool",
     "tcp_proxy",
     "rio",
+    "babencoin",
 
     # Tools
     "tools/submit",
