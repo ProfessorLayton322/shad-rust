@@ -20,6 +20,7 @@ members = [
     "tcp_proxy",
     "rio",
     "babencoin",
+    "crawler",
 
     # Tools
     "tools/submit",
