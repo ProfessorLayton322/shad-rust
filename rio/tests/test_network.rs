@@ -1,13 +1,6 @@
-use std::{
-    net::SocketAddr,
-    sync::{
-        atomic::{AtomicUsize, Ordering},
-        Arc,
-    },
-    task::{Context, Poll, Waker},
-};
+use std::net::SocketAddr;
 
-use futures::{channel::oneshot, future::poll_fn, pin_mut, task::ArcWake, FutureExt};
+use futures::channel::oneshot;
 use log::debug;
 use test_log::test;
 
@@ -191,8 +184,9 @@ async fn test_fan_in_ping_pong() {
     }
 }
 
-// Some inefficient implementations can fail this test,
-// but they might still be correct.
+// Some inefficient implementations might read the socket
+// on every .poll(), which is still correct.
+// So this test is disabled.
 ////////////////////////////////////////////////////////////////////////////////
 
 /*
@@ -255,7 +249,6 @@ async fn test_waker_call_count() {
     for call_count in call_counters.iter().take(call_counters.len() - 1) {
         assert_eq!(call_count.load(Ordering::Relaxed), 0);
     }
-    NB: some implementations try to always read
     assert_eq!(call_counters.last().unwrap().load(Ordering::Relaxed), 1);
 }
 */
