@@ -47,3 +47,7 @@ while let Some(result) = futures.next().await {
 	// ...
 }
 ```
+
+* Для отладки можете на своё усмотрене использовать `logging` либо `tracing`. Запустить конкретный тест и посмотреть логи можно следующими командами:
+  - Для `logging`: `RUST_LOG=debug cargo test test_name -- --nocapture`
+  - Для `tracing`: `RUST_LOG_SPAN_EVENTS=full cargo test test_name -- --nocapture`
