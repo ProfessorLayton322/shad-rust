@@ -305,7 +305,16 @@ async fn do(receiver: Receiver<...>) {
 и [TcpStream](https://docs.rs/tokio/latest/tokio/net/struct.TcpStream.html). Они очень похожи на соответствующие типы в std.
 * Для прослушивания TCP-порта и установления соединений может быть удобно
 иметь отдельные async-методы `listen_loop` и `dial_loop`, где последний пытается установить соединение с конкретным адресом из конфига. Чтобы агрегировать заранее
-неизвестное число фьюч `dial_loop` в одну фьючу, используйте [FuturesUnordered](https://docs.rs/futures/latest/futures/stream/struct.FuturesUnordered.html).
+неизвестное число фьюч `dial_loop` в стрим, используйте [FuturesUnordered](https://docs.rs/futures/latest/futures/stream/struct.FuturesUnordered.html). Пример использования:
+
+```rust
+let mut futures = FuturesUnordered::new();
+futures.push(fetch_url(site));
+while let Some(result) = futures.next().await {
+	// ...
+}
+```
+
 * Для вас уже написан `MessageReader`, который конвертирует `ReadHalf` (получаемый из `TcpStream::split`)
 в stream `VerifiedPeerMessage`. Чтобы достать следующий элемент стрима, используйте `.next()`.
 * Обработку соединения с каждым отдельным пиром проще иметь в виде независимой таски.
