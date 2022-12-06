@@ -309,7 +309,7 @@ async fn do(receiver: Receiver<...>) {
 
 ```rust
 let mut futures = FuturesUnordered::new();
-futures.push(fetch_url(site));
+futures.push(dial_loop(address));
 while let Some(result) = futures.next().await {
 	// ...
 }
