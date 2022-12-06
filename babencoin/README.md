@@ -291,7 +291,7 @@ async fn do(receiver: Receiver<...>) {
                 info!("foo terminated");
                 break;
             }
-            value = receiver.recv() {
+            value = receiver.recv() => {
                 do_stuff(value);
             }
         }
