@@ -21,6 +21,8 @@ members = [
     "rio",
     "babencoin",
     "crawler",
+    "arrayvec",
+    "snapshot",
 
     # Tools
     "tools/submit",

@@ -63,7 +63,7 @@ test:
 	cargo test --release
 
 test_miri:
-	# cargo +nightly miri test
+	# cargo +nightly-2022-12-08 miri test
 
 test_no_parallel:
 	cargo test -j 1
