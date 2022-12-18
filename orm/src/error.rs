@@ -1,5 +1,10 @@
-use crate::{data::DataType, object::Schema, ObjectId};
+use crate::{
+    data::DataType,
+    object::{pull_id, pull_schema, Schema},
+    ObjectId,
+};
 
+use rusqlite::types::Type;
 use thiserror::Error;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -18,10 +23,63 @@ pub enum Error {
     Storage(#[source] Box<dyn std::error::Error>),
 }
 
+pub fn parse_column_name(msg: &str) -> Option<&'_ str> {
+    let res = msg.strip_prefix("no such column: ");
+    if res.is_some() {
+        return res;
+    }
+    let schema = pull_schema();
+    let pattern = format!("table {} has no column named ", schema.table_name);
+    msg.strip_prefix(&pattern)
+}
+
+pub fn rusqltype_to_string(rusql_type: Type) -> String {
+    match rusql_type {
+        Type::Null => "Null",
+        Type::Integer => "Integer",
+        Type::Real => "Real",
+        Type::Text => "Text",
+        Type::Blob => "Blob",
+    }
+    .to_string()
+}
+
 impl From<rusqlite::Error> for Error {
     fn from(err: rusqlite::Error) -> Self {
-        // TODO: your code here.
-        unimplemented!()
+        let schema: &'static Schema = pull_schema();
+        let id: ObjectId = pull_id();
+        match err {
+            rusqlite::Error::SqliteFailure(code, msg) => {
+                if let rusqlite::ErrorCode::DatabaseBusy = code.code {
+                    return Error::LockConflict;
+                }
+                let msg = msg.unwrap();
+                let column_name = parse_column_name(&msg).unwrap();
+                let field = schema.find_field(column_name).unwrap();
+                Error::MissingColumn(Box::new(MissingColumnError {
+                    type_name: schema.struct_name,
+                    attr_name: field.attr_name,
+                    table_name: schema.table_name,
+                    column_name: field.column_name,
+                }))
+            }
+            rusqlite::Error::QueryReturnedNoRows => Error::NotFound(Box::new(NotFoundError {
+                object_id: id,
+                type_name: schema.struct_name,
+            })),
+            rusqlite::Error::InvalidColumnType(_, column_name, rusqltype) => {
+                let field = schema.find_field(&column_name).unwrap();
+                Error::UnexpectedType(Box::new(UnexpectedTypeError {
+                    type_name: schema.struct_name,
+                    attr_name: field.attr_name,
+                    table_name: schema.table_name,
+                    column_name: field.column_name,
+                    expected_type: field.data_type,
+                    got_type: rusqltype_to_string(rusqltype),
+                }))
+            }
+            _ => Error::Storage(Box::new(err)),
+        }
     }
 }
 
