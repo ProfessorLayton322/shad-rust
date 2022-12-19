@@ -1,3 +1,6 @@
+use futures::{channel::oneshot, future::poll_fn};
+use test_log::test;
+
 use std::{
     sync::{
         atomic::{AtomicBool, Ordering},
@@ -6,8 +9,6 @@ use std::{
     task::Poll,
     thread,
 };
-
-use futures::{channel::oneshot, future::poll_fn};
 
 #[test]
 fn test_simple() {

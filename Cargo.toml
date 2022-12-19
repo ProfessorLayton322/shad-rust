@@ -19,6 +19,10 @@ members = [
     "threadpool",
     "tcp_proxy",
     "rio",
+    "babencoin",
+    "crawler",
+    "arrayvec",
+    "snapshot",
 
     # Tools
     "tools/submit",
